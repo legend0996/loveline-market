@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model admin_otps {
+  id         String    @id
+  email      String
+  code       String
+  expires_at DateTime  @db.Timestamp(6)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model admins {
+  id         String    @id
+  email      String    @unique
+  username   String    @unique
+  password   String
+  is_active  Boolean?  @default(true)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model buyers {
+  id         String    @id
+  phone      String    @unique
+  source     String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model payments {
+  id         String    @id
+  user_id    String?
+  amount     Int?
+  type       String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model posters {
+  id         String    @id
+  image_url  String?
+  caption    String?
+  active     Boolean?  @default(true)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model referrals {
+  id         String    @id
+  user_id    String?
+  phone      String?
+  status     String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id               String             @id
+  name             String
+  email            String             @unique
+  phone            String             @unique
+  password         String
+  points           Int?               @default(0)
+  views_earnings   Int?               @default(0)
+  is_blocked       Boolean?           @default(false)
+  created_at       DateTime?          @default(now()) @db.Timestamp(6)
+  payments         payments[]
+  referrals        referrals[]
+  view_submissions view_submissions[]
+}
+
+model view_submissions {
+  id         String    @id
+  user_id    String?
+  screenshot String?
+  views      Int?
+  earnings   Int?
+  status     String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
