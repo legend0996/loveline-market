@@ -1,4 +1,6 @@
-# 💖 Loveline Market — Full System Documentation
+Full System Documentation
+# 💖 Loveline Market
+
 
 ## 🚀 Overview
 
@@ -401,8 +403,8 @@ npm start
 You can deploy using:
 
 * Backend → Render / Railway / VPS
-* Frontend → Vercel / Netlify
-* Database → Neon (already done)
+* Frontend → Vercel / Netlify/purchased hosting which do supports html
+* Database → Neon or MySql
 
 ---
 
@@ -428,7 +430,7 @@ they may not include name because they might not read this😂😂
 
 ## ❤️ Final Note
 
-This is not just a project — it's a **scalable earning platform**.
+This is not just a project, it's a **scalable earning platform**.
 
 With proper deployment, marketing, and payment integration,
 this can become a **real business system**.
