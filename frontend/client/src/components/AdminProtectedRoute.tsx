@@ -1,17 +1,14 @@
-import { Navigate } from "react-router-dom";
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-type Props = {
-  children: React.ReactElement;
-};
-
-const AdminProtectedRoute = ({ children }: Props) => {
-  const token = localStorage.getItem("adminToken");
-
-  if (!token) {
-    return <Navigate to="/admin-login" replace />;
+const AdminProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { adminToken } = useAuth();
+  const location = useLocation();
+  if (!adminToken) {
+    return <Navigate to="/admin-login" state={{ from: location }} replace />;
   }
-
-  return children;
+  return <>{children}</>;
 };
 
 export default AdminProtectedRoute;
