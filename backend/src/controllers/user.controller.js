@@ -41,9 +41,23 @@ export const registerUser = async (req, res) => {
       },
     });
 
+    const token = jwt.sign(
+      { userId: user.id },
+      "SECRET_KEY",
+      { expiresIn: "7d" }
+    );
+
     res.json({
       message: "User registered successfully",
-      userId: user.id,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        points: user.points || 0,
+        viewsEarnings: user.views_earnings || 0,
+      },
     });
   } catch (err) {
     console.error(err);
